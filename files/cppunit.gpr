@@ -4,5 +4,5 @@ library project cppunit is
   for Library_Dir      use "/usr/local/lib";
   for Library_Kind     use "dynamic";
   for Library_Name     use "cppunit";
-  for Externally_Built use "true;
+  for Externally_Built use "true";
 end cppunit;
