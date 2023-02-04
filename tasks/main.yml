@@ -1,0 +1,36 @@
+---
+
+- name: Download the cppunit source
+  unarchive: 
+    src: "{{ cppunit_tarball_url }}"
+    dest: "{{ cppunit_local_path }}"
+
+- name: Configure the cppunit installation
+  shell: 
+    cmd: ./autogen.sh && ./configure
+    chdir: "{{ cppunit_local_path }}"
+
+- name: Build cppunit from source
+  make:
+    chdir: "{{ cppunit_local_path }}"
+
+- name: Check the cppunit build
+  make:
+    target: check
+    chdir: "{{ cppunit_local_path }}"
+
+- name: Install the cppunit libraries
+  make:
+    target: install
+    chdir: "{{ cppunit_local_path }}"
+
+- name: Copy the GNAT library project
+  copy:
+    src: files/cppunit.gpr
+    dest: "{{ cppunit_local_path }}"
+
+- name: Add the cppunit GNAT library to the project path
+  copy:
+    dest: /etc/profile.d/cppunit_project_path.sh
+    content: |
+      export GPR_PROJECT_PATH="{{ cppunit_local_path }}:${GPR_PROJECT_PATH}"
