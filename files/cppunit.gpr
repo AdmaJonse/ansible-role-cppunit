@@ -1,8 +1,8 @@
 library project cppunit is
-  for Languages       use ("C");
-  For Source_Dirs     use ("/usr/local/include/cppunit");
-  for Library_Dir     use "/usr/local/lib";
-  for Library_Kind    use "dynamic";
-  for Library_Name    use "cppunit";
-  for Externall_Built use "true;
+  for Languages        use ("C");
+  for Source_Dirs      use ("/usr/local/include/cppunit");
+  for Library_Dir      use "/usr/local/lib";
+  for Library_Kind     use "dynamic";
+  for Library_Name     use "cppunit";
+  for Externally_Built use "true;
 end cppunit;
