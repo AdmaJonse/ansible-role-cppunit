@@ -4,7 +4,6 @@
   apt:
     pkg:
       - make
-      - build-essential
       - autotools-dev
       - automake
       - libtool
