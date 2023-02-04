@@ -1,5 +1,6 @@
 ---
 
 cppunit_version: 1.15.1
-cppunit_tarball_url: "https://github.com/freedesktop/libreoffice-cppunit/archive/refs/tags/cppunit-{{ cppunit_version }}.tar.gz"
-cppunit_local_path: "/opt/cppunit"
+cppunit_tarball_url: "http://dev-www.libreoffice.org/src/cppunit-{{ cppunit_version }}.tar.gz"
+cppunit_prefix: "/opt"
+cppunit_local_path: "{{ cppunit_prefix }}/cppunit"

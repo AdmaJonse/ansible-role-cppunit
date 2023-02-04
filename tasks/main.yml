@@ -1,36 +1,62 @@
 ---
 
-- name: Download the cppunit source
+- name: Install prerequisites with apt
+  apt:
+    pkg:
+      - make
+      - build-essential
+      - autotools-dev
+      - automake
+      - libtool
+      - doxygen
+  become: true
+
+- name: Download and untar the cppunit source
   unarchive: 
     src: "{{ cppunit_tarball_url }}"
+    dest: "{{ cppunit_prefix }}"
+    remote_src: true
+  become: true
+
+- name: Create a symbolic link to the cppunit source
+  file:
+    src: "{{ cppunit_prefix }}/cppunit-{{ cppunit_version }}"
     dest: "{{ cppunit_local_path }}"
+    state: link
+  become: true
 
 - name: Configure the cppunit installation
   shell: 
     cmd: ./autogen.sh && ./configure
     chdir: "{{ cppunit_local_path }}"
+  become: true
 
 - name: Build cppunit from source
   make:
     chdir: "{{ cppunit_local_path }}"
+  become: true
 
 - name: Check the cppunit build
   make:
     target: check
     chdir: "{{ cppunit_local_path }}"
+  become: true
 
 - name: Install the cppunit libraries
   make:
     target: install
     chdir: "{{ cppunit_local_path }}"
+  become: true
 
 - name: Copy the GNAT library project
   copy:
     src: files/cppunit.gpr
     dest: "{{ cppunit_local_path }}"
+  become: true
 
 - name: Add the cppunit GNAT library to the project path
   copy:
     dest: /etc/profile.d/cppunit_project_path.sh
     content: |
       export GPR_PROJECT_PATH="{{ cppunit_local_path }}:${GPR_PROJECT_PATH}"
+  become: true
